@@ -74,7 +74,7 @@ function onCheckWin(board, player) {
 
 function onGameOver({ index, player }) {
   for (let i of winCombos[index]) {
-    const color = (player === HUMAN_PLAYER) ? 'blue' : 'red';
+    const color = (player === HUMAN_PLAYER) ? '#2196f3' : '#f44336';
     document.getElementById(i).style.backgroundColor = color;
   }
   for (let i = 0; i < cells.length; i++) {
@@ -98,7 +98,7 @@ function onDeclareWinner(who) {
 function onCheckGameTie() {
   if (emptySquares().length === 0) {
     for (let i = 0; i < cells.length; i++) {
-      cells[i].style.backgroundColor = 'green';
+      cells[i].style.backgroundColor = '#8bc34a';
       cells[i].removeEventListener('click', onTurnClick, false)
     }
     onDeclareWinner('A Tie');
@@ -113,5 +113,59 @@ function emptySquares() {
 }
 
 function botPicksSpot() {
-  return emptySquares()[0];
+  return minimax(origBoard, AI_PLAYER).index;
 }
+
+function minimax(newBoard, player) {
+  let availableSpots = emptySquares();
+
+  if (onCheckWin(newBoard, HUMAN_PLAYER)) {
+    return { score: -10 }
+  } else if (onCheckWin(newBoard, AI_PLAYER)) {
+    return { score: 10 }
+  } else if (availableSpots.length === 0) {
+    return { score: 0 }
+  }
+
+  let moves = [];
+
+  for (let i=0; i<availableSpots.length; i++) {
+    let move = {};
+    move.index = newBoard[availableSpots[i]];
+    newBoard[availableSpots[i]] = player;
+
+    if (player === AI_PLAYER) {
+      let result = minimax(newBoard, HUMAN_PLAYER);
+      move.score = result.score;
+    } else {
+      let result = minimax(newBoard, AI_PLAYER);
+      move.score = result.score;
+    } // end of if/else block
+
+    newBoard[availableSpots[i]] = move.index;
+    moves.push(move);
+  } // end of for look
+
+  let bestMove;
+
+  if (player === AI_PLAYER) {
+    let bestScore = -10000;
+    for (let i=0; i<moves.length; i++) {
+      if (moves[i].score > bestScore) {
+        bestScore = moves[i].score;
+        bestMove = i;
+      }
+    } // end of for loop
+  } 
+  else {
+    let bestScore = 10000;
+    for (let i=0; i<moves.length; i++) {
+      if (moves[i].score < bestScore) {
+        bestScore = moves[i].score;
+        bestMove = i;
+      }
+    }
+  }
+
+  return moves[bestMove];
+} // end of minimax func()
