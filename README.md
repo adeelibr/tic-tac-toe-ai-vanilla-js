@@ -5,6 +5,8 @@ There are 2 implementations of this tic tac toe game one is the simple one in wh
 
 <hr />
 
+### Vanilla Javascript Implementation
+
 To use the `simpleAi.js` implementation simply go in the `index.html` file and  at the very bottom in the `script tag` uncomment the line with `smartAi.js`. If you want to use the the one with the minimax algorithm do the opposite.
 
 ```diff
@@ -12,9 +14,9 @@ To use the `simpleAi.js` implementation simply go in the `index.html` file and  
 + <script src="simpleAi.js"></script>
 ```
 
-### How To Use It
+##### How To Use It
 * Clone the repository
-* Go in `index.html` file 
+* Go in `simple/index.html` file 
 * If you want to use simple 2 player (You & Dumb Bot) uncomment the script with `simpleAi.js`
 * If you want to use 2 player (You & Undefeated Bot) uncomment the script with `smartAi.js`
 
@@ -26,3 +28,9 @@ To use the `simpleAi.js` implementation simply go in the `index.html` file and  
 
 I have hosted the live example of the Smart AI Game at 
 [Codepen, [CLICK HERE]](https://codepen.io/adeelibr/full/KRaBaQ/)
+
+### React Implementation
+
+```
+Coming Soon~
+```
